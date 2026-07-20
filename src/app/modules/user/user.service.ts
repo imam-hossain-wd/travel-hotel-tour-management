@@ -3,10 +3,10 @@ import httpStatus from "http-status-codes";
 import { JwtPayload } from "jsonwebtoken";
 import { envVars } from "../../config/env";
 import AppError from "../../errorHelpers/AppError";
-import { QueryBuilder } from "../../utils/QueryBuilder";
 import { userSearchableFields } from "./user.constant";
 import { IAuthProvider, IUser, Role } from "./user.interface";
 import { User } from "./user.model";
+import { QueryBuilder } from "../../utils/QueryBuilder";
 
 const createUser = async (payload: Partial<IUser>) => {
     const { email, password, ...rest } = payload;
