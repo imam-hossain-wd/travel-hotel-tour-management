@@ -23,7 +23,7 @@ const updateUser = catchAsync(async (req: Request, res: Response, next: NextFunc
     const userId = req.params.id;
     const verifiedToken = req.user;
     const payload = req.body;
-    const user = await UserServices.updateUser(userId, payload, verifiedToken as JwtPayload)
+    const user = await UserServices.updateUser(userId as string, payload, verifiedToken as JwtPayload)
 
     // res.status(httpStatus.CREATED).json({
     //     message: "User Created Successfully",
@@ -61,7 +61,7 @@ const getMe = catchAsync(async (req: Request, res: Response, next: NextFunction)
 })
 const getSingleUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
-    const result = await UserServices.getSingleUser(id);
+    const result = await UserServices.getSingleUser(id as string);
     sendResponse(res, {
         success: true,
         statusCode: httpStatus.CREATED,
