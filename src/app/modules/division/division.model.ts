@@ -1,6 +1,5 @@
-import {  Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 import { IDivision } from "./division.interface";
-
 
 
 const divisionSchema = new Schema<IDivision>({
@@ -51,3 +50,6 @@ divisionSchema.pre("findOneAndUpdate", async function (next) {
 
     next()
 })
+
+
+export const Division = model<IDivision>("Division", divisionSchema)
