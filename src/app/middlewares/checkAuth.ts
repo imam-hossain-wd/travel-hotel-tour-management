@@ -7,6 +7,7 @@ import { IsActive } from "../modules/user/user.interface";
 import { User } from "../modules/user/user.model";
 import { verifyToken } from "../utils/jwt";
 
+
 export const checkAuth = (...authRoles: string[]) => async (req: Request, res: Response, next: NextFunction) => {
 
     try {
