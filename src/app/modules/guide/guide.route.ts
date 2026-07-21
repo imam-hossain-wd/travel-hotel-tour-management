@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { GuideControllers } from "./guide.controller";
 import { checkAuth } from "../../middlewares/checkAuth";
 import { Role } from "../user/user.interface";
+import { GuideControllers } from "./guide.controller";
 
 const router = Router();
 
 router.post(
-    "/",
-    checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
+    "/create",
+    // checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
     GuideControllers.createGuide
 );
 
