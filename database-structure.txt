@@ -1,0 +1,59 @@
+Database Structure
+-------------------
+Users
+
+Roles
+
+Permissions
+
+Division
+
+District
+
+Upazila
+
+Hotel
+
+Hotel Room
+
+Room Type
+
+Room Amenities
+
+Tour
+
+Tour Category
+
+Tour Type
+
+Tour Guide
+
+Vehicle
+
+Vehicle Type
+
+Vehicle Booking
+
+Hotel Booking
+
+Tour Booking
+
+Reviews
+
+Wishlist
+
+Coupon
+
+Payment
+
+Transaction
+
+Notification
+
+Gallery
+
+Blog
+
+FAQ
+
+Settings
