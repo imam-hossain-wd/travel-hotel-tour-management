@@ -1,7 +1,7 @@
 
 import { Request, Response } from 'express';
-import { catchAsync } from '../../utils/catchAsync';
-import { sendResponse } from '../../utils/sendResponse';
+import { catchAsync } from '../../../utils/catchAsync';
+import { sendResponse } from '../../../utils/sendResponse';
 import { ITour } from './tour.interface';
 import { TourService } from './tour.service';
 

@@ -1,9 +1,12 @@
 
-import { deleteImageFromCLoudinary } from "../../config/cloudinary.config";
-import { QueryBuilder } from "../../utils/QueryBuilder";
+import { deleteImageFromCLoudinary } from "../../../config/cloudinary.config";
+import { QueryBuilder } from "../../../utils/QueryBuilder";
 import { tourSearchableFields, tourTypeSearchableFields } from "./tour.constant";
-import { ITour, ITourType } from "./tour.interface";
-import { Tour, TourType } from "./tour.model";
+import { ITour } from "./tour.interface";
+import { Tour} from "./tour.model";
+
+
+
 
 const createTour = async (payload: ITour) => {
     const existingTour = await Tour.findOne({ title: payload.title });
@@ -11,7 +14,6 @@ const createTour = async (payload: ITour) => {
         throw new Error("A tour with this title already exists.");
     }
     const tour = await Tour.create(payload)
-
     return tour;
 };
 

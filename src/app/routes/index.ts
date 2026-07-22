@@ -2,7 +2,7 @@ import { Router } from "express"
 import { UserRoutes } from "../modules/user/user.route"
 import { AuthRoutes } from "../modules/auth/auth.route"
 import { DivisionRoutes } from "../modules/division/division.route"
-import { TourRoutes } from "../modules/tour/tour.route"
+import { TourRoutes } from "../modules/tour/tour/tour.route"
 import { GuideRoutes } from "../modules/guide/guide.route"
 
 export const router = Router()

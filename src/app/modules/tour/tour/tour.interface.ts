@@ -1,4 +1,66 @@
-// import { Types } from "mongoose";
+import { Types } from "mongoose";
+import { TourDifficulty, TourStatus } from "./tour.enum";
+
+
+export interface ITourCategory {
+    name: string;
+    slug: string;
+    icon?: string;
+    description?: string;
+}
+
+export interface ITourDuration {
+    days: number;
+    nights: number;
+}
+
+// Tour Capacity
+export interface ITourCapacity {
+    maxGuest: number;
+    minGuest?: number;
+    minAge?: number;
+}
+// Tour Itinerary
+export interface ITourItinerary {
+    day: number;
+    title: string;
+    description: string;
+
+    activities?: string[];
+    meals?: string[];
+    accommodation?: string;
+}
+
+export interface ITour {
+    title: string;
+    slug: string;
+    shortDescription?: string;
+    description?: string;
+    thumbnail?: string;
+    images?: string[];
+    deleteImages?: string[];
+    location: string;
+    tourCategory: Types.ObjectId;
+    travelStyle: Types.ObjectId;
+    difficulty: TourDifficulty;
+    guide:Types.ObjectId,
+    tourStatus: TourStatus;
+    duration: ITourDuration;
+    startDate?: Date;
+    endDate?: Date;
+    pricing: number;
+    capacity: ITourCapacity;
+    included?: string[];
+    excluded?: string[];
+    amenities?: string[];
+    highlights?: string[];
+    itinerary?: ITourItinerary[];
+    // policy?: ITourPolicy;
+    isFeatured?: boolean;
+    isPublished?: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
 
 // export interface ITourType {
 //     name: string;
@@ -140,80 +202,3 @@
 // //     days: 3,
 // //     nights: 2
 // // }
-
-import { Types } from "mongoose";
-import { TourDifficulty, TourStatus } from "./tour.enum";
-
-
-export interface ITourCategory {
-    name: string;
-    slug: string;
-    icon?: string;
-    description?: string;
-}
-
-export interface ITourDuration {
-    days: number;
-    nights: number;
-}
-
-// Tour Capacity
-export interface ITourCapacity {
-    maxGuest: number;
-    minGuest?: number;
-    minAge?: number;
-}
-// Tour Itinerary
-export interface ITourItinerary {
-    day: number;
-    title: string;
-    description: string;
-
-    activities?: string[];
-    meals?: string[];
-    accommodation?: string;
-}
-
-export interface IGuide {
-    user: Types.ObjectId;
-    bio?: string;
-    experience?: number;
-    languages?: string[];
-    specialization?: string[];
-    licenseNumber?: string;
-    profilePicture?: string;
-    isAvailable?: boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
-}
-
-export interface ITour {
-    title: string;
-    slug: string;
-    shortDescription?: string;
-    description?: string;
-    thumbnail?: string;
-    images?: string[];
-    deleteImages?: string[];
-    location: string;
-    tourCategory: Types.ObjectId;
-    travelStyle: Types.ObjectId;
-    difficulty: TourDifficulty;
-    TourStatus:TourStatus,
-    duration: ITourDuration;
-    startDate?: Date;
-    endDate?: Date;
-    pricing: number;
-    capacity: ITourCapacity;
-    included?: string[];
-    excluded?: string[];
-    amenities?: string[];
-    highlights?: string[];
-    itinerary?: ITourItinerary[];
-    // guide?: Types.ObjectId;
-    // policy?: ITourPolicy;
-    isFeatured?: boolean;
-    isPublished?: boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
-}
