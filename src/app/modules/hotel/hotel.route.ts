@@ -10,16 +10,7 @@ const router = express.Router();
 router.post(
     "/create",
     // checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
-    multerUpload.fields([
-        {
-            name: "thumbnail",
-            maxCount: 1,
-        },
-        {
-            name: "images",
-            maxCount: 20,
-        },
-    ]),
+    multerUpload.array("files"),
     validateRequest(createHotelZodSchema),
     HotelController.createHotel
 );
@@ -30,23 +21,14 @@ router.get(
 );
 
 router.get(
-    "/:slug",
+    "/:id",
     HotelController.getSingleHotel
 );
 
 router.patch(
     "/:id",
     // checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
-    multerUpload.fields([
-        {
-            name: "thumbnail",
-            maxCount: 1,
-        },
-        {
-            name: "images",
-            maxCount: 20,
-        },
-    ]),
+    multerUpload.array("files"),
     validateRequest(updateHotelZodSchema),
     HotelController.updateHotel
 );
@@ -58,3 +40,4 @@ router.delete(
 );
 
 export const HotelRoutes = router;
+

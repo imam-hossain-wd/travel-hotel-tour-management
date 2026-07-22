@@ -1,5 +1,7 @@
 
+import { HttpStatusCode } from "axios";
 import { deleteImageFromCLoudinary } from "../../../config/cloudinary.config";
+import AppError from "../../../errorHelpers/AppError";
 import { QueryBuilder } from "../../../utils/QueryBuilder";
 import { tourSearchableFields } from "./tour.constant";
 import { ITour } from "./tour.interface";
@@ -41,12 +43,15 @@ const getAllTours = async (query: Record<string, string>) => {
         meta
     }
 };
-const getSingleTour = async (slug: string) => {
-    const tour = await Tour.findOne({ slug });
-    return {
-        data: tour,
+const getSingleTour = async (id: string) => {
+    const result = await Tour.findById(id);
+    if(!result){
+       throw new AppError(HttpStatusCode.NotFound, "There is no tour found")
     }
+    return result
+  
 };
+
 const updateTour = async (id: string, payload: Partial<ITour>) => {
 
     const existingTour = await Tour.findById(id);

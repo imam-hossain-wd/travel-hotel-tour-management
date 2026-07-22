@@ -1,22 +1,26 @@
 import { Request, Response } from "express";
-import { IHotel } from "./hotel.interface";
 import { HotelService } from "./hotel.service";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 
+
+import { HotelImageType } from "./hotel.interface";
+
 const createHotel = catchAsync(async (req: Request, res: Response) => {
 
-    const body = req.body;
+    const files = req.files as Express.Multer.File[];
+    const images = files.map((file, index) => ({
+        url: file.path,
+        publicId: file.filename,
+        type: index === 0 ? HotelImageType.THUMBNAIL : HotelImageType.COVER,
+        alt: "",
+        title: "",
+        order: index,
+    }));
 
-    const files = req.files as {
-        thumbnail?: Express.Multer.File[];
-        images?: Express.Multer.File[];
-    };
-
-    const payload: IHotel = {
-        ...body,
-        thumbnail: files?.thumbnail?.[0]?.path,
-        images: files?.images?.map(file => file.path) || [],
+    const payload = {
+        ...req.body,
+        images,
     };
 
     const result = await HotelService.createHotel(payload);
@@ -45,9 +49,7 @@ const getAllHotels = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getSingleHotel = catchAsync(async (req: Request, res: Response) => {
-
-    const result = await HotelService.getSingleHotel(req.params.slug as string);
-
+    const result = await HotelService.getSingleHotel(req.params.id as string);
     sendResponse(res, {
         statusCode: 200,
         success: true,
@@ -57,25 +59,30 @@ const getSingleHotel = catchAsync(async (req: Request, res: Response) => {
 });
 
 const updateHotel = catchAsync(async (req: Request, res: Response) => {
+    const files = req.files as Express.Multer.File[];
 
     const body = req.body;
 
-    const files = req.files as {
-        thumbnail?: Express.Multer.File[];
-        images?: Express.Multer.File[];
-    };
+    let images = body.images || [];
+
+    if (files?.length) {
+        const uploadedImages = files.map((file, index) => ({
+            url: file.path,
+            publicId: file.filename,
+            type: index === 0 ? HotelImageType.THUMBNAIL : HotelImageType.COVER,
+            alt: "",
+            title: "",
+            isPrimary: index === 0,
+            order: index,
+        }));
+
+        images = uploadedImages;
+    }
 
     const payload = {
         ...body,
+        ...(files?.length && { images }),
     };
-
-    if (files?.thumbnail?.length) {
-        payload.thumbnail = files.thumbnail[0].path;
-    }
-
-    if (files?.images?.length) {
-        payload.images = files.images.map(file => file.path);
-    }
 
     const result = await HotelService.updateHotel(
         req.params.id as string,
@@ -90,10 +97,45 @@ const updateHotel = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+// const updateHotel = catchAsync(async (req: Request, res: Response) => {
+
+//     const body = req.body;
+
+//     const files = (req.files as Express.Multer.File[]) || [];
+
+//     const images = files.map((file, index) => ({
+//         url: file.path,
+//         publicId: file.filename,
+//         type: HotelImageType.OTHER,
+//         alt: "",
+//         title: "",
+//         isPrimary: false,
+//         order: index,
+//     }));
+
+//     const payload = {
+//         ...body,
+//     };
+
+//     if (images.length > 0) {
+//         payload.images = images;
+//     }
+
+//     const result = await HotelService.updateHotel(
+//         req.params.id as string,
+//         payload
+//     );
+
+//     sendResponse(res, {
+//         statusCode: 200,
+//         success: true,
+//         message: "Hotel updated successfully",
+//         data: result,
+//     });
+// });
+
 const deleteHotel = catchAsync(async (req: Request, res: Response) => {
-
     const result = await HotelService.deleteHotel(req.params.id as string);
-
     sendResponse(res, {
         statusCode: 200,
         success: true,

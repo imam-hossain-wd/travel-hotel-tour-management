@@ -67,15 +67,10 @@ export const createHotelZodSchema = z.object({
 
 export const updateHotelZodSchema = z.object({
     name: z.string().min(2).max(100).optional(),
-
     description: z.string().optional(),
-
     address: z.string().min(5).max(300).optional(),
-
     division: z.string().optional(),
-
     location: locationSchema.optional(),
-
     star: z
         .number()
         .min(1)
@@ -83,9 +78,7 @@ export const updateHotelZodSchema = z.object({
         .optional(),
 
     amenities: z.array(z.string()).optional(),
-
     phone: z.string().optional(),
-
     email: z
         .string()
         .email("Invalid email address")
@@ -95,14 +88,9 @@ export const updateHotelZodSchema = z.object({
         .string()
         .url("Invalid website url")
         .optional(),
-
     checkInTime: z.string().optional(),
-
     checkOutTime: z.string().optional(),
-
     isFeatured: z.boolean().optional(),
-
     isPublished: z.boolean().optional(),
-
     deleteImages: z.array(z.string()).optional(),
 });

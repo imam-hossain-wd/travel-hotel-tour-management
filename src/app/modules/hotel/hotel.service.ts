@@ -1,4 +1,5 @@
-import { deleteImageFromCLoudinary } from "../../config/cloudinary.config";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import {  deleteImageFromCLoudinary } from "../../config/cloudinary.config";
 import AppError from "../../errorHelpers/AppError";
 import { QueryBuilder } from "../../utils/QueryBuilder";
 import { hotelSearchableFields } from "./hotel.constant";
@@ -8,14 +9,14 @@ import { Hotel } from "./hotel.model";
 /* ---------------- Create Hotel ---------------- */
 
 const createHotel = async (payload: IHotel) => {
-    const existingHotel = await Hotel.findOne({ name: payload.name });
 
+    console.log(payload , "service apyload")
+    const existingHotel = await Hotel.findOne({ name: payload.name });
     if (existingHotel) {
         throw new AppError(409, "Hotel already exists.");
     }
 
     const hotel = await Hotel.create(payload);
-
     return hotel;
 };
 
@@ -48,9 +49,9 @@ const getAllHotels = async (query: Record<string, string>) => {
 
 /* ---------------- Get Single Hotel ---------------- */
 
-const getSingleHotel = async (slug: string) => {
+const getSingleHotel = async (id: string) => {
 
-    const hotel = await Hotel.findOne({ slug }).populate("division");
+    const hotel = await Hotel.findById (id).populate("division");
 
     if (!hotel) {
         throw new AppError(404, "Hotel not found.");
@@ -72,75 +73,143 @@ const updateHotel = async (
         throw new AppError(404, "Hotel not found.");
     }
 
-    // Merge Images
-    if (
-        payload.images &&
-        payload.images.length > 0 &&
-        existingHotel.images &&
-        existingHotel.images.length > 0
-    ) {
-        payload.images = [...existingHotel.images, ...payload.images];
-    }
-
-    // Delete Selected Images
-    if (
-        payload.deleteImages &&
-        payload.deleteImages.length > 0 &&
-        existingHotel.images
-    ) {
-
-        const remainingImages = existingHotel.images.filter(
-            (image) => !payload.deleteImages?.includes(image)
-        );
-
-        const newImages = (payload.images || [])
-            .filter((image) => !payload.deleteImages?.includes(image))
-            .filter((image) => !remainingImages.includes(image));
-
-        payload.images = [...remainingImages, ...newImages];
-    }
-
-    const updatedHotel = await Hotel.findByIdAndUpdate(
-        id,
-        payload,
-        {
-            new: true,
-            runValidators: true,
-        }
-    );
+    /* ---------------------------------------------------------- */
+    /* Delete Images (deleteImages = publicId[])                  */
+    /* ---------------------------------------------------------- */
 
     if (
         payload.deleteImages &&
         payload.deleteImages.length > 0
     ) {
+
+        // Keep remaining images
+        existingHotel.images = existingHotel.images.filter(
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            (image) => !payload?.deleteImages!.includes(image.publicId)
+        );
+
+        // Delete from Cloudinary
         await Promise.all(
-            payload.deleteImages.map((url) =>
-                deleteImageFromCLoudinary(url)
+            payload.deleteImages.map((publicId) =>
+                deleteImageFromCLoudinary(publicId)
             )
         );
     }
 
-    return updatedHotel;
+    /* ---------------------------------------------------------- */
+    /* Merge Newly Uploaded Images                                */
+    /* ---------------------------------------------------------- */
+
+    if (payload.images && payload.images.length > 0) {
+
+        existingHotel.images.push(...payload.images);
+
+        // Optional: Re-order automatically
+        existingHotel.images = existingHotel.images.map((img, index) => ({
+            //@ts-ignore
+            ...img.toObject(),
+            order: index,
+        }));
+    }
+
+    /* ---------------------------------------------------------- */
+    /* Update Other Fields                                        */
+    /* ---------------------------------------------------------- */
+
+    Object.keys(payload).forEach((key) => {
+
+        if (
+            key !== "images" &&
+            key !== "deleteImages"
+        ) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (existingHotel as any)[key] = (payload as any)[key];
+        }
+
+    });
+
+    await existingHotel.save();
+
+    return existingHotel;
 };
 
+
+// const updateHotel = async (
+//     id: string,
+//     payload: Partial<IHotel & { deleteImages?: string[] }>
+// ) => {
+
+//     console.log(id , "id")
+//     console.log(payload, 'payload')
+//     const existingHotel = await Hotel.findById(id);
+
+//     if (!existingHotel) {
+//         throw new AppError(404, "Hotel not found.");
+//     }
+
+//     // Merge Images
+//     if (
+//         payload.images &&
+//         payload.images.length > 0 &&
+//         existingHotel.images &&
+//         existingHotel.images.length > 0
+//     ) {
+//         payload.images = [...existingHotel.images, ...payload.images];
+//     }
+
+//     // Delete Selected Images
+//     if (
+//         payload.deleteImages &&
+//         payload.deleteImages.length > 0 &&
+//         existingHotel.images
+//     ) {
+
+//         const remainingImages = existingHotel.images.filter(
+//             (image) => !payload.deleteImages?.includes(image)
+//         );
+
+//         const newImages = (payload.images || [])
+//             .filter((image) => !payload.deleteImages?.includes(image))
+//             .filter((image) => !remainingImages.includes(image));
+
+//         payload.images = [...remainingImages, ...newImages];
+//     }
+
+//     const updatedHotel = await Hotel.findByIdAndUpdate(
+//         id,
+//         payload,
+//         {
+//             new: true,
+//             runValidators: true,
+//         }
+//     );
+
+//     if (
+//         payload.deleteImages &&
+//         payload.deleteImages.length > 0
+//     ) {
+//         await Promise.all(
+//             payload.deleteImages.map((url) =>
+//                 deleteImageFromCLoudinary(url)
+//             )
+//         );
+//     }
+
+//     return updatedHotel;
+// };
+
 /* ---------------- Delete Hotel ---------------- */
-
 const deleteHotel = async (id: string) => {
-
     const existingHotel = await Hotel.findById(id);
 
     if (!existingHotel) {
         throw new AppError(404, "Hotel not found.");
     }
 
-    if (existingHotel.thumbnail) {
-        await deleteImageFromCLoudinary(existingHotel.thumbnail);
-    }
-
     if (existingHotel.images?.length) {
         await Promise.all(
-            existingHotel.images.map((url) =>
-                deleteImageFromCLoudinary(url)
+            existingHotel.images.map((image) =>
+                deleteImageFromCLoudinary(image.publicId)
             )
         );
     }
