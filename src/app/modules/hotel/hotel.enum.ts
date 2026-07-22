@@ -17,3 +17,16 @@ export enum HotelImageType {
     FACILITY = "FACILITY",
     OTHER = "OTHER",
 }
+
+
+export enum HotelAmenity {
+    WIFI = "Free WiFi",
+    PARKING = "Parking",
+    RESTAURANT = "Restaurant",
+    SWIMMING_POOL = "Swimming Pool",
+    GYM = "Gym",
+    SPA = "Spa",
+    AIRPORT_SHUTTLE = "Airport Shuttle",
+    LAUNDRY = "Laundry",
+    ROOM_SERVICE = "Room Service",
+}

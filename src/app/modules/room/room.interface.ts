@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 import {
     BedType,
+    RoomAmenity,
     RoomImageType,
     RoomStatus,
     RoomType,
@@ -64,7 +65,7 @@ export interface IRoom {
     pricing: IRoomPricing;
     capacity: IRoomCapacity;
     beds: IRoomBed[];
-    amenities?: string[];
+    amenities?: RoomAmenity;
     status: RoomStatus;
     totalRooms: number;
     availableRooms: number;

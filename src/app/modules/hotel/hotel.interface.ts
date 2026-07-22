@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { HotelImageType, HotelStar } from "./hotel.enum";
+import { HotelAmenity, HotelImageType, HotelStar } from "./hotel.enum";
 
 /* ---------------- Hotel Image Type ---------------- */
 
@@ -51,7 +51,7 @@ export interface IHotel {
         coordinates: [number, number]; // [longitude, latitude]
     };
     star: HotelStar;
-    amenities?: string[];
+    amenities?: HotelAmenity;
     checkInTime?: string;
     checkOutTime?: string;
     averageRating?: number;

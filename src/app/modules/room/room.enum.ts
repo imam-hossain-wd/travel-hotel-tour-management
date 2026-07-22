@@ -38,3 +38,14 @@ export enum RoomImageType {
     FACILITY = "FACILITY",
     OTHER = "OTHER",
 }
+
+export enum RoomAmenity {
+    AIR_CONDITION = "Air Conditioning",
+    TV = "Smart TV",
+    WIFI = "Free WiFi",
+    MINI_BAR = "Mini Bar",
+    BALCONY = "Balcony",
+    SAFE = "Safety Locker",
+    COFFEE_MACHINE = "Coffee Machine",
+    HAIR_DRYER = "Hair Dryer",
+}
