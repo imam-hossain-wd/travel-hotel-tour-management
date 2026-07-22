@@ -2,9 +2,7 @@ import { Request, Response } from "express";
 import { HotelService } from "./hotel.service";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
-
-
-import { HotelImageType } from "./hotel.interface";
+import { HotelImageType } from "./hotel.enum";
 
 const createHotel = catchAsync(async (req: Request, res: Response) => {
 
@@ -12,7 +10,7 @@ const createHotel = catchAsync(async (req: Request, res: Response) => {
     const images = files.map((file, index) => ({
         url: file.path,
         publicId: file.filename,
-        type: index === 0 ? HotelImageType.THUMBNAIL : HotelImageType.COVER,
+        type: index === 0 ? HotelImageType.COVER : HotelImageType.FACILITY,
         alt: "",
         title: "",
         order: index,
@@ -69,7 +67,7 @@ const updateHotel = catchAsync(async (req: Request, res: Response) => {
         const uploadedImages = files.map((file, index) => ({
             url: file.path,
             publicId: file.filename,
-            type: index === 0 ? HotelImageType.THUMBNAIL : HotelImageType.COVER,
+            type: index === 0 ? HotelImageType.COVER : HotelImageType.VIEW,
             alt: "",
             title: "",
             isPrimary: index === 0,

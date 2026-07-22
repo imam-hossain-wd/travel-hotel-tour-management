@@ -1,25 +1,74 @@
-// import { Types } from "mongoose";
+import { Types } from "mongoose";
+import { HotelImageType, HotelStar } from "./hotel.enum";
+
+/* ---------------- Hotel Image Type ---------------- */
 
 
+/* ---------------- Hotel Image ---------------- */
 
-// export interface IHotelImage {
+export interface IHotelImage {
+    _id?: Types.ObjectId;
+    url: string;
+    publicId: string;
+    type: HotelImageType;
+    alt?: string;
+    title?: string;
+    isPrimary?: boolean;
+    order?: number;
+}
 
-//     _id?: Types.ObjectId;
-//     url: string;
-//     publicId: string;
-//     alt?: string;
-//     title?: string;
-//     isPrimary?: boolean;
-//     order?: number;
-// }
+/* ---------------- Hotel ---------------- */
+
+export interface IHotelImage {
+    _id?: Types.ObjectId;
+
+    url: string;
+
+    publicId: string;
+
+    type: HotelImageType;
+
+    alt?: string;
+
+    title?: string;
+
+    isPrimary?: boolean;
+
+    order?: number;
+}
+
+/* ---------------- Hotel ---------------- */
+
+export interface IHotel {
+    name: string;
+    slug: string;
+    description?: string;
+    images: IHotelImage[];
+    address: string;
+    division: Types.ObjectId;
+    location: {
+        type: "Point";
+        coordinates: [number, number]; // [longitude, latitude]
+    };
+    star: HotelStar;
+    amenities?: string[];
+    checkInTime?: string;
+    checkOutTime?: string;
+    averageRating?: number;
+    reviewCount?: number;
+    lowestPrice?: number;
+    isFeatured?: boolean;
+    isPublished?: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
 
 
 // export interface IHotel {
 //     name: string;
 //     slug: string;
 //     description?: string;
-//     thumbnail?: string;
-//     images?: string[];
+//     images: IHotelImage[];
 //     address: string;
 //     division: Types.ObjectId;
 //     location: {
@@ -35,76 +84,9 @@
 //     checkOutTime?: string;
 //     isFeatured?: boolean;
 //     isPublished?: boolean;
+//     createdAt?: Date;
+//     updatedAt?: Date;
 // }
-
-import { Types } from "mongoose";
-
-/* ---------------- Hotel Image Type ---------------- */
-
-export enum HotelImageType {
-    THUMBNAIL = "THUMBNAIL",
-    COVER = "COVER",
-    LOBBY = "LOBBY",
-    ROOM = "ROOM",
-    RESTAURANT = "RESTAURANT",
-    POOL = "POOL",
-    GYM = "GYM",
-    VIEW = "VIEW",
-    FACILITY = "FACILITY",
-    OTHER = "OTHER",
-}
-
-/* ---------------- Hotel Image ---------------- */
-
-export interface IHotelImage {
-    _id?: Types.ObjectId;
-
-    // Cloudinary secure url
-    url: string;
-
-    // Cloudinary public_id
-    publicId: string;
-
-    // Image category
-    type: HotelImageType;
-
-    // SEO & Accessibility
-    alt?: string;
-
-    // Admin panel / Gallery title
-    title?: string;
-
-    // Cover / Thumbnail Image
-    isPrimary?: boolean;
-    // Gallery display order
-    order?: number;
-}
-
-/* ---------------- Hotel ---------------- */
-
-export interface IHotel {
-    name: string;
-    slug: string;
-    description?: string;
-    images: IHotelImage[];
-    address: string;
-    division: Types.ObjectId;
-    location: {
-        lat: number;
-        lng: number;
-    };
-    star: number;
-    amenities?: string[];
-    phone?: string;
-    email?: string;
-    website?: string;
-    checkInTime?: string;
-    checkOutTime?: string;
-    isFeatured?: boolean;
-    isPublished?: boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
-}
 
 
 // {

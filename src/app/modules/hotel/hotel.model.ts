@@ -146,10 +146,10 @@
 
 import { model, Schema } from "mongoose";
 import {
-  HotelImageType,
   IHotel,
   IHotelImage,
 } from "./hotel.interface";
+import { HotelImageType } from "./hotel.enum";
 
 /* ---------------- Image Schema ---------------- */
 
@@ -254,14 +254,7 @@ const hotelSchema = new Schema<IHotel>(
       default: [],
     },
 
-    phone: String,
-
-    email: String,
-
-    website: String,
-
     checkInTime: String,
-
     checkOutTime: String,
 
     isFeatured: {
