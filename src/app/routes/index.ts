@@ -5,6 +5,7 @@ import { DivisionRoutes } from "../modules/division/division.route"
 import { TourRoutes } from "../modules/tour/tour/tour.route"
 import { GuideRoutes } from "../modules/guide/guide.route"
 import { TourCategoryRoutes } from "../modules/tour/tourCategory/tourCategory.route"
+import { TravelStyleRoutes } from "../modules/tour/TravelStyle/travelStyle.route"
 
 
 export const router = Router()
@@ -33,6 +34,10 @@ const moduleRoutes = [
     {
         path: "/tour-category",
         route: TourCategoryRoutes
+    },
+    {
+        path: "/travel-style",
+        route: TravelStyleRoutes
     },
 ]
 

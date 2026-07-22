@@ -28,7 +28,7 @@ export interface ITour {
     slug: string;
     shortDescription?: string;
     description?: string;
-    thumbnail?: string;
+    // thumbnail?: string;
     images?: string[];
     deleteImages?: string[];
     location: string;
@@ -104,56 +104,7 @@ export interface ITour {
 //     deleteImages?: string[]
 // }
 
-// //tour category 
 
-// export interface ITourCategory {
-//     name: string;
-//     slug: string;
-//     icon?: string;
-//     description?: string;
-// }
-
-// // {
-// //     "name": "Adventure",
-// //     "slug": "adventure"
-// // }
-
-// // Adventure
-// // Beach
-// // Hill
-// // Island
-// // Wildlife
-// // Religious
-// // Heritage
-// // Camping
-// // Cruise
-
-// // travel style 
-// export interface ITravelStyle {
-//     name: string;
-//     slug: string;
-//     description?: string;
-// }
-// // {
-// //     "name": "Solo",
-// //     "slug": "solo"
-// // }
-// // {
-// //     "name": "Family",
-// //     "slug": "family"
-// // }
-// // {
-// //     "name": "Couple",
-// //     "slug": "couple"
-// // }
-// // {
-// //     "name": "Group",
-// //     "slug": "group"
-// // }
-// // {
-// //     "name": "Corporate",
-// //     "slug": "corporate"
-// // }
 
 
 // export enum TourDifficulty {

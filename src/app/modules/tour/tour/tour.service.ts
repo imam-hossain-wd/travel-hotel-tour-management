@@ -1,14 +1,13 @@
 
 import { deleteImageFromCLoudinary } from "../../../config/cloudinary.config";
 import { QueryBuilder } from "../../../utils/QueryBuilder";
-import { tourSearchableFields, tourTypeSearchableFields } from "./tour.constant";
+import { tourSearchableFields } from "./tour.constant";
 import { ITour } from "./tour.interface";
 import { Tour} from "./tour.model";
 
 
-
-
 const createTour = async (payload: ITour) => {
+
     const existingTour = await Tour.findOne({ title: payload.title });
     if (existingTour) {
         throw new Error("A tour with this title already exists.");
@@ -84,66 +83,9 @@ const updateTour = async (id: string, payload: Partial<ITour>) => {
 const deleteTour = async (id: string) => {
     return await Tour.findByIdAndDelete(id);
 };
-const createTourType = async (payload: ITourType) => {
-    const existingTourType = await TourType.findOne({ name: payload.name });
-
-    if (existingTourType) {
-        throw new Error("Tour type already exists.");
-    }
-
-    return await TourType.create({ name });
-};
-const getAllTourTypes = async (query: Record<string, string>) => {
-    const queryBuilder = new QueryBuilder(TourType.find(), query)
-
-    const tourTypes = await queryBuilder
-        .search(tourTypeSearchableFields)
-        .filter()
-        .sort()
-        .fields()
-        .paginate()
-
-    const [data, meta] = await Promise.all([
-        tourTypes.build(),
-        queryBuilder.getMeta()
-    ])
-
-    return {
-        data,
-        meta
-    }
-};
-const getSingleTourType = async (id: string) => {
-    const tourType = await TourType.findById(id);
-    return {
-        data: tourType
-    };
-};
-const updateTourType = async (id: string, payload: ITourType) => {
-    const existingTourType = await TourType.findById(id);
-    if (!existingTourType) {
-        throw new Error("Tour type not found.");
-    }
-
-    const updatedTourType = await TourType.findByIdAndUpdate(id, payload, { new: true });
-    return updatedTourType;
-};
-const deleteTourType = async (id: string) => {
-    const existingTourType = await TourType.findById(id);
-    if (!existingTourType) {
-        throw new Error("Tour type not found.");
-    }
-
-    return await TourType.findByIdAndDelete(id);
-};
 
 export const TourService = {
     createTour,
-    createTourType,
-    deleteTourType,
-    updateTourType,
-    getAllTourTypes,
-    getSingleTourType,
     getSingleTour,
     getAllTours,
     updateTour,

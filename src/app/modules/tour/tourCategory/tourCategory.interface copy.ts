@@ -24,3 +24,27 @@ export interface ITourCategory {
 //    "icon":"mountain",
 //    "description":"Adventure and trekking tours"
 // }
+
+// //tour category 
+
+// export interface ITourCategory {
+//     name: string;
+//     slug: string;
+//     icon?: string;
+//     description?: string;
+// }
+
+// // {
+// //     "name": "Adventure",
+// //     "slug": "adventure"
+// // }
+
+// // Adventure
+// // Beach
+// // Hill
+// // Island
+// // Wildlife
+// // Religious
+// // Heritage
+// // Camping
+// // Cruise
