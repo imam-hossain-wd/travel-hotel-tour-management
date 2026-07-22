@@ -83,7 +83,6 @@ import { model, Schema } from "mongoose";
 import {
   ITour,
   ITourCapacity,
-  ITourCategory,
   ITourDuration,
   ITourItinerary,
 } from "./tour.interface";
@@ -91,32 +90,7 @@ import { TourDifficulty, TourStatus } from "./tour.enum";
 
 /* ---------------- Tour Category ---------------- */
 
-const tourCategorySchema = new Schema<ITourCategory>(
-  {
-    name: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-    },
-    slug: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    icon: String,
-    description: String,
-  },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
-);
 
-export const TourCategory = model<ITourCategory>(
-  "TourCategory",
-  tourCategorySchema
-);
 
 /* ---------------- Tour ---------------- */
 
@@ -213,12 +187,6 @@ const tourSchema = new Schema<ITour>(
       required: true,
     },
 
-    tourCategory: {
-      type: Schema.Types.ObjectId,
-      ref: "TourCategory",
-      required: true,
-    },
-
     travelStyle: {
       type: Schema.Types.ObjectId,
       ref: "TravelStyle",
@@ -234,6 +202,11 @@ const tourSchema = new Schema<ITour>(
     guide: {
       type: Schema.Types.ObjectId,
       ref: "Guide",
+      required: true,
+    },
+    tourCategory: {
+      type: Schema.Types.ObjectId,
+      ref: "Tour",
       required: true,
     },
 

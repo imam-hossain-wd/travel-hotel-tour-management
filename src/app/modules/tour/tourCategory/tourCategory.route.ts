@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { Role } from "../../user/user.interface";
-import { checkAuth } from "../../../middlewares/checkAuth";
+// import { Role } from "../../user/user.interface";
+// import { checkAuth } from "../../../middlewares/checkAuth";
 import { TourCategoryControllers } from "./tourCategory.controller";
 
 
@@ -8,7 +8,7 @@ const router = Router();
 
 router.post(
     "/",
-    checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
+    // checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
     TourCategoryControllers.createTourCategory
 );
 
@@ -24,13 +24,13 @@ router.get(
 
 router.patch(
     "/:id",
-    checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
+    // checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
     TourCategoryControllers.updateTourCategory
 );
 
 router.delete(
     "/:id",
-    checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
+    // checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
     TourCategoryControllers.deleteTourCategory
 );
 

@@ -1,14 +1,6 @@
 import { Types } from "mongoose";
 import { TourDifficulty, TourStatus } from "./tour.enum";
 
-
-export interface ITourCategory {
-    name: string;
-    slug: string;
-    icon?: string;
-    description?: string;
-}
-
 export interface ITourDuration {
     days: number;
     nights: number;
