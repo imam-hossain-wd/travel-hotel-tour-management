@@ -7,6 +7,7 @@ import { GuideRoutes } from "../modules/guide/guide.route"
 import { TourCategoryRoutes } from "../modules/tour/tourCategory/tourCategory.route"
 import { TravelStyleRoutes } from "../modules/tour/TravelStyle/travelStyle.route"
 import { HotelRoutes } from "../modules/hotel/hotel.route"
+import { RoomRoutes } from "../modules/room/room.route"
 
 
 export const router = Router()
@@ -43,6 +44,10 @@ const moduleRoutes = [
     {
         path: "/hotel",
         route: HotelRoutes
+    },
+    {
+        path: "/room",
+        route: RoomRoutes
     },
 ]
 
